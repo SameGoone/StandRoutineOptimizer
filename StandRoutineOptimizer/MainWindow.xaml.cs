@@ -1,5 +1,7 @@
-﻿using System;
+﻿using StandRoutineOptimizer;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,6 +45,7 @@ namespace CloneRepoHelper
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Render();
+            Trace.Listeners.Add(new TextBoxTraceListener(LogTextBox));
         }
 
         private void Render()
@@ -60,20 +63,6 @@ namespace CloneRepoHelper
                 .ToList();
         }
 
-        private void CloneButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Directory.Exists(StandPathField.Text))
-            {
-                Clone();
-            }
-        }
-
-        private void Clone()
-        {
-            StandOperationsHelper cloneStandsRepoHelper = new StandOperationsHelper(StandPathField.Text);
-            cloneStandsRepoHelper.CloneRepos(_repositories);
-        }
-
         private void ChooseStandButton_Click(object sender, RoutedEventArgs e)
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
@@ -86,8 +75,24 @@ namespace CloneRepoHelper
             }
         }
 
+        private void CloneButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddLogNewLine();
+            if (Directory.Exists(StandPathField.Text))
+            {
+                Clone();
+            }
+        }
+
+        private void Clone()
+        {
+            StandOperationsHelper cloneStandsRepoHelper = new StandOperationsHelper(StandPathField.Text);
+            cloneStandsRepoHelper.CloneRepos(_repositories);
+        }
+
         private void CreateSymLinksButton_Click(object sender, RoutedEventArgs e)
         {
+            AddLogNewLine();
             if (Directory.Exists(StandPathField.Text))
             {
                 CreateSymLinks();
@@ -99,6 +104,18 @@ namespace CloneRepoHelper
             StandOperationsHelper cloneStandsRepoHelper = new StandOperationsHelper(StandPathField.Text);
             cloneStandsRepoHelper.CreateSymLinks();
         }
-        
+
+        private void ClearLogButton_Click(object sender, RoutedEventArgs e)
+        {
+            LogTextBox.Text = string.Empty;
+        }
+
+        private void AddLogNewLine()
+        {
+            if (!string.IsNullOrEmpty(LogTextBox.Text))
+            {
+                LogTextBox.Text += "\r\n";
+            }
+        }
     }
 }

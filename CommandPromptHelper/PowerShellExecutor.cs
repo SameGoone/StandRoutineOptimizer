@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 
@@ -33,11 +34,11 @@ namespace CommandPromptHelper
 
         public Collection<PSObject> ExecutePowerShell(string[] scripts)
         {
-            System.Diagnostics.Debug.WriteLine("Run powerShell with scripts:");
+            Trace.WriteLine("Run powerShell with scripts:");
 
             foreach (var script in scripts)
             {
-                System.Diagnostics.Debug.WriteLine($"   {script}");
+                Trace.WriteLine($"   {script}");
             }
 
             Collection<PSObject> results;
@@ -53,7 +54,7 @@ namespace CommandPromptHelper
 
             foreach (var psObject in results)
             {
-                System.Diagnostics.Debug.WriteLine(psObject.BaseObject.ToString());
+                Trace.WriteLine(psObject.BaseObject.ToString());
             }
             return results;
         }
