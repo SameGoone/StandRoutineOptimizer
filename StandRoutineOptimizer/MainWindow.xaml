@@ -12,7 +12,9 @@
             <TextBox x:Name="StandPathField" Text="/stand/path" Width="500"></TextBox>
             <Button x:Name="ChooseStandButton" Click="ChooseStandButton_Click">Choose stand</Button>
         </DockPanel>
-        <StackPanel x:Name="RepoPanel" CanVerticallyScroll="True" Height="370"></StackPanel>
+        <ScrollViewer CanContentScroll="True" SnapsToDevicePixels="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly" DataContext="{Binding}" Height="351">
+            <StackPanel x:Name="RepoPanel" VerticalAlignment="Top" Orientation="Vertical" CanVerticallyScroll="True" SnapsToDevicePixels="True" OverridesDefaultStyle="True"></StackPanel>
+        </ScrollViewer>
         <DockPanel Height="25">
             <Button Width="200" Content="Clone" x:Name="CloneButton" Click="CloneButton_Click"/>
             <Button Width="200" Content="Create SymLinks" x:Name="CreateSymLinksButton" Click="CreateSymLinksButton_Click"/>
