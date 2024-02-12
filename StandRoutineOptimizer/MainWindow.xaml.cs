@@ -86,23 +86,31 @@ namespace CloneRepoHelper
 
         private void Clone()
         {
+            CloneButton.IsEnabled = false;
+
             StandOperationsHelper cloneStandsRepoHelper = new StandOperationsHelper(StandPathField.Text);
             cloneStandsRepoHelper.CloneRepos(_repositories);
+
+            CloneButton.IsEnabled = true;
         }
 
         private void CreateSymLinksButton_Click(object sender, RoutedEventArgs e)
         {
+            CreateSymLinksButton.IsEnabled = false;
+
             AddLogNewLine();
             if (Directory.Exists(StandPathField.Text))
             {
                 CreateSymLinks();
             }
+
+            CreateSymLinksButton.IsEnabled = true;
         }
 
         private void CreateSymLinks()
         {
             StandOperationsHelper cloneStandsRepoHelper = new StandOperationsHelper(StandPathField.Text);
-            cloneStandsRepoHelper.CreateSymLinks();
+            cloneStandsRepoHelper.CreateSymLinksAsync();
         }
 
         private void ClearLogButton_Click(object sender, RoutedEventArgs e)

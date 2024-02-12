@@ -38,7 +38,7 @@ namespace CloneRepoHelper
             }
         }
 
-        public void CreateSymLinks()
+        public async void CreateSymLinksAsync()
         {
             var directories = _webAppFolder.GetDirectories();
 
@@ -51,7 +51,7 @@ namespace CloneRepoHelper
             {
                 var realDir = repo.FullName;
                 var linkDir = Path.Combine(_pkgFolder.FullName, repo.Name);
-                PowerShellExecutor.Singleton.CreateSymbolicLink(linkDir, realDir);
+                _ = await PowerShellExecutor.Singleton.CreateSymbolicLinkAsync(linkDir, realDir);
             }
         }
     }

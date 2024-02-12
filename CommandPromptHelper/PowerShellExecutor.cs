@@ -32,7 +32,7 @@ namespace CommandPromptHelper
             _runspace.Open();
         }
 
-        public Collection<PSObject> ExecutePowerShell(string[] scripts)
+        public async Task<PSDataCollection<PSObject>> ExecutePowerShellAsync(string[] scripts)
         {
             Trace.WriteLine("Run powerShell with scripts:");
 
@@ -41,15 +41,15 @@ namespace CommandPromptHelper
                 Trace.WriteLine($"   {script}");
             }
 
-            Collection<PSObject> results;
-            using (var ps = PowerShell.Create())
+            PSDataCollection<PSObject> results;
+            using (var ps = .Create())
             {
                 ps.Runspace = _runspace;
                 foreach (var script in scripts)
                 {
                     ps.AddScript(script);
                 }
-                results = ps.Invoke();
+                results = await ps.InvokeAsync();
             }
 
             foreach (var psObject in results)
@@ -59,14 +59,14 @@ namespace CommandPromptHelper
             return results;
         }
 
-        public Collection<PSObject> CreateSymbolicLink(string linkDir, string realDir)
+        public async Task<PSDataCollection<PSObject>> CreateSymbolicLinkAsync(string linkDir, string realDir)
         {
             var scripts = new string[]
             {
                 $"New-Item -Path {linkDir} -ItemType SymbolicLink -Value {realDir}"
             };
 
-            return ExecutePowerShell(scripts);
+            return await ExecutePowerShellAsync(scripts);
         }
 
         public void Dispose()

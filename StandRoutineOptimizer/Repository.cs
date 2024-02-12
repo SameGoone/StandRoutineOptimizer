@@ -68,7 +68,7 @@ namespace CloneRepoHelper
         {
             if (DoClone)
             {
-                GitCommandExecutor.ExecuteClone(destinationPath, CloneUri);
+                GitCommandExecutor.ExecuteCloneAsync(destinationPath, CloneUri);
             }
         }
     }

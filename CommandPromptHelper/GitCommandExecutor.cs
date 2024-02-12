@@ -2,7 +2,7 @@
 {
     public class GitCommandExecutor
     {
-        public static void ExecuteClone(string destinationPath, string repoUrl)
+        public static async void ExecuteCloneAsync(string destinationPath, string repoUrl)
         {
             var scripts = new string[]
             {
@@ -10,10 +10,10 @@
                 $"git clone {repoUrl}"
             };
 
-            PowerShellExecutor.Singleton.ExecutePowerShell(scripts);
+            await PowerShellExecutor.Singleton.ExecutePowerShellAsync(scripts);
         }
 
-        public static void ExecutePull(string repositoryPath)
+        public static async void ExecutePullAsync(string repositoryPath)
         {
             var scripts = new string[]
             {
@@ -21,10 +21,10 @@
                 $"git pull -q"
             };
 
-            PowerShellExecutor.Singleton.ExecutePowerShell(scripts);
+            await PowerShellExecutor.Singleton.ExecutePowerShellAsync(scripts);
         }
 
-        public static void ExecuteCheckout(string repositoryPath, string branchName)
+        public static async void ExecuteCheckoutAsync(string repositoryPath, string branchName)
         {
             var scripts = new string[]
             {
@@ -32,10 +32,10 @@
                 $"git checkout {branchName}"
             };
 
-            PowerShellExecutor.Singleton.ExecutePowerShell(scripts);
+            await PowerShellExecutor.Singleton.ExecutePowerShellAsync(scripts);
         }
 
-        public static string GetCurrentBranchName(string repositoryPath)
+        public static async Task<string> GetCurrentBranchNameAsync(string repositoryPath)
         {
             var scripts = new string[]
             {
@@ -43,7 +43,7 @@
                 $"git rev-parse --abbrev-ref HEAD"
             };
 
-            return PowerShellExecutor.Singleton.ExecutePowerShell(scripts)[0].BaseObject.ToString();
+            return (await PowerShellExecutor.Singleton.ExecutePowerShellAsync(scripts))[0].BaseObject.ToString();
         }
     }
 }
